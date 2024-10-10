@@ -40,11 +40,12 @@ const parseInternal = (payload, mqttClient,topic) => {
                 console.log(1);
                 console.log("Payload2",payload)
                 var parts = payload.split(' ');
-                events.pubsub.removeAllListeners('getResponse');
+               
                 console.log("parts",parts);
                 console.log("length",parts.length,8);
                 if(parts.length==8)
                 {
+                    events.pubsub.removeAllListeners('getResponse1');
                     callback(parts);
                  
                 }
@@ -60,11 +61,12 @@ const parseInternal = (payload, mqttClient,topic) => {
             console.log(1);
             console.log("Payload2",payload)
             var parts = payload.split(' ');
-            events.pubsub.removeAllListeners('getResponse2');
+           
             console.log("parts",parts);
             console.log("length",parts.length,3);
             if(parts.length==3)
             {
+                events.pubsub.removeAllListeners('getResponse2');
                 callback(parts);
                 
             }
@@ -79,11 +81,12 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse3');
+       
         console.log("parts",parts);
         console.log("length",parts.length,4);
         if(parts.length==4)
         {
+            events.pubsub.removeAllListeners('getResponse3');
             callback(parts);
             
         }
@@ -94,11 +97,12 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse4');
+      
         console.log("parts",parts);
         console.log("length",parts.length,12);
         if(parts.length==12)
         {
+            events.pubsub.removeAllListeners('getResponse4');
             callback(parts);
             
         }
@@ -110,11 +114,12 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse5');
+    
         console.log("parts",parts);
         console.log("length",parts.length,11);
         if(parts.length==11)
             {
+                events.pubsub.removeAllListeners('getResponse5');
                 callback(parts);
                 
             }
@@ -126,11 +131,12 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse6');
+      
         console.log("parts",parts);
         console.log("length",parts.length,8);
         if(parts.length==8)
             {
+                events.pubsub.removeAllListeners('getResponse6');
                 callback(parts);
                 
             }
@@ -142,11 +148,12 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse7');
+        
         console.log("parts",parts);
         console.log("length",parts.length,8);
         if(parts.length==8)
             {
+                events.pubsub.removeAllListeners('getResponse7');
                 callback(parts);
                 
             }
