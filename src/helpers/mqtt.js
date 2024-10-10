@@ -42,6 +42,7 @@ const parseInternal = (payload, mqttClient,topic) => {
                 var parts = payload.split(' ');
                 events.pubsub.removeAllListeners('getResponse');
                 console.log("parts",parts);
+                console.log("length",parts.length,8);
                 if(parts.length==8)
                 {
                     callback(parts);
@@ -61,6 +62,7 @@ const parseInternal = (payload, mqttClient,topic) => {
             var parts = payload.split(' ');
             events.pubsub.removeAllListeners('getResponse2');
             console.log("parts",parts);
+            console.log("length",parts.length,3);
             if(parts.length==3)
             {
                 callback(parts);
@@ -79,6 +81,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
         events.pubsub.removeAllListeners('getResponse3');
         console.log("parts",parts);
+        console.log("length",parts.length,4);
         if(parts.length==4)
         {
             callback(parts);
@@ -93,6 +96,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
         events.pubsub.removeAllListeners('getResponse4');
         console.log("parts",parts);
+        console.log("length",parts.length,12);
         if(parts.length==12)
         {
             callback(parts);
@@ -108,6 +112,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
         events.pubsub.removeAllListeners('getResponse5');
         console.log("parts",parts);
+        console.log("length",parts.length,11);
         if(parts.length==11)
             {
                 callback(parts);
@@ -123,6 +128,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
         events.pubsub.removeAllListeners('getResponse6');
         console.log("parts",parts);
+        console.log("length",parts.length,8);
         if(parts.length==8)
             {
                 callback(parts);
@@ -138,7 +144,8 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
         events.pubsub.removeAllListeners('getResponse7');
         console.log("parts",parts);
-        if(parts.length==11)
+        console.log("length",parts.length,8);
+        if(parts.length==8)
             {
                 callback(parts);
                 
