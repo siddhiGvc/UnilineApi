@@ -42,7 +42,12 @@ const parseInternal = (payload, mqttClient,topic) => {
                 var parts = payload.split(' ');
                 events.pubsub.removeAllListeners('getResponse');
                 console.log("parts",parts);
-                callback(parts);
+                if(parts.length==8)
+                {
+                    callback(parts);
+                 
+                }
+              
              
               
              

@@ -1,6 +1,6 @@
 const net = require("net");
 const moment=require("moment");
-const {sequelize,MacMapping,Transaction,Testing}=require("../models");
+const {sequelize,UnilineMacMapping,Transaction,Testing}=require("../models");
 const { SerialPort: serials } = require("../models");
 var events = require('../helpers/events');
 const { sendV } = require("../controllers/KwikPay/macAddress");
@@ -59,7 +59,7 @@ function sendData(socket,count,socketNumber) {
 async function sendVend(socket, tid, name, remotePort, Data) {
   try {
     // Find data based on remotePort
-    const data = await MacMapping.findOne({ where: { SocketNumber: remotePort } });
+    const data = await UnilineMacMapping.findOne({ where: { SocketNumber: remotePort } });
     if (data) {
       data.Color = "warning";
       await data.save();
@@ -113,7 +113,7 @@ async function sendClear(socket,name,remotePort) {
   // Construct message
   const message = `*TC?#`;
 
-  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+  const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
   // console.log(data);
    if(data)
    {
@@ -689,7 +689,7 @@ const server = net.createServer((socket) => {
             
               
              
-              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
             // console.log(data);
               if(data)
                   {
@@ -727,7 +727,7 @@ const server = net.createServer((socket) => {
             const address=command[1];
             console.log(`Mac Adress:${address}`);
             console.log("SN:",command[2]);
-            const data=await MacMapping.findOne({where:{MacID:command[1]}});
+            const data=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
            // console.log(data);
             if(data)
                 {
@@ -747,7 +747,7 @@ const server = net.createServer((socket) => {
                        console.log("Saved In Transactions");
                 }
                 else{
-                  await MacMapping.create({
+                  await UnilineMacMapping.create({
                     MacID:command[1],
                     SNoutput:command[2],
                     lastHeartBeatTime:new Date().toISOString(),
@@ -764,7 +764,7 @@ const server = net.createServer((socket) => {
             {
               
                 console.log("inh received");
-                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
               
                 if(data)
                     {
@@ -789,7 +789,7 @@ const server = net.createServer((socket) => {
               {
                 
                 
-                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                 
                   if(data)
                       {
@@ -820,7 +820,7 @@ const server = net.createServer((socket) => {
                 {
                   
                   
-                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                    const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                   
                     if(data)
                         {
@@ -851,7 +851,7 @@ const server = net.createServer((socket) => {
               {
                 
                   // console.log("Hbt recived",command[1]);
-                  const data=await MacMapping.findOne({where:{MacID:command[1]}});
+                  const data=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
                   // console.log(data);
                 
                   if(data)
@@ -877,7 +877,7 @@ const server = net.createServer((socket) => {
                           
                       }
                   else{
-                  await MacMapping.create({
+                  await UnilineMacMapping.create({
                     MacID:command[1],
                     SNoutput:command[2],
                     lastHeartBeatTime:new Date().toISOString(),
@@ -893,7 +893,7 @@ const server = net.createServer((socket) => {
                 {
                   
                     
-                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                    const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                   
                     if(data)
                         {
@@ -925,7 +925,7 @@ const server = net.createServer((socket) => {
             {
               
                 
-                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
               
                 if(data)
                     {
@@ -956,18 +956,18 @@ const server = net.createServer((socket) => {
              else if(command[0]=="IP")
              {
               console.log("IP recived");
-              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
             
               if(data)
                 {
                   console.log("Found Device");
-                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                   console.log("SerialNumber Of This Device && received SerialNumber",data.SNoutput , command[2]);
                    if(data.SNoutput==command[2])
                    {
 
-                    const data=await MacMapping.findOne({where:{SNoutput:command[1]}});
-                    const data1=await MacMapping.findOne({where:{SNoutput:command[2]}});
+                    const data=await UnilineMacMapping.findOne({where:{SNoutput:command[1]}});
+                    const data1=await UnilineMacMapping.findOne({where:{SNoutput:command[2]}});
                     console.log("SocketNumber of Paired Device", data.SocketNumber);
                     events.pubsub.emit('sendV',data.SocketNumber,1,command[3],data1.SNoutput) ;
                   
@@ -981,11 +981,11 @@ const server = net.createServer((socket) => {
                     {
                       
                         
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                       
                         if(data)
                             {
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                               // console.log(data);
                                if(data)
                                {
@@ -1020,7 +1020,7 @@ const server = net.createServer((socket) => {
                     {
                       
                        // console.log(remotePort);
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                        // console.log(data);
                         if(data)
                             {
@@ -1055,7 +1055,7 @@ const server = net.createServer((socket) => {
                        
                         
                        
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                        // console.log(data);
                         if(data)
                             {
@@ -1087,11 +1087,11 @@ const server = net.createServer((socket) => {
                       {
                         
                           
-                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                          const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                         
                           if(data)
                               {
-                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                     console.log(data);
                                    
                                 
@@ -1118,7 +1118,7 @@ const server = net.createServer((socket) => {
                       
                         
                        
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                        // console.log(data);
                         if(data)
                             {
@@ -1154,7 +1154,7 @@ const server = net.createServer((socket) => {
                       
                         
                        
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                        // console.log(data);
                         if(data)
                             {
@@ -1190,7 +1190,7 @@ const server = net.createServer((socket) => {
                       
                         
                        
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                        // console.log(data);
                         if(data)
                             {
@@ -1225,11 +1225,11 @@ const server = net.createServer((socket) => {
                       
                         
                        
-                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                       // console.log(data);
                         if(data)
                             {
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                               // console.log(data);
                                if(data)
                                {
@@ -1268,7 +1268,7 @@ const server = net.createServer((socket) => {
                         
                           
                          
-                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                          const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                         // console.log(data);
                           if(data)
                               {
@@ -1304,7 +1304,7 @@ const server = net.createServer((socket) => {
                           
                             
                            
-                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                            const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                           // console.log(data);
                             if(data)
                                 {
@@ -1341,7 +1341,7 @@ const server = net.createServer((socket) => {
                           
                             
                            
-                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                            const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                           // console.log(data);
                             if(data)
                                 {
@@ -1377,7 +1377,7 @@ const server = net.createServer((socket) => {
                             
                               
                              
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                             // console.log(data);
                               if(data)
                                   {
@@ -1413,7 +1413,7 @@ const server = net.createServer((socket) => {
                               
                                 
                                
-                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                               // console.log(data);
                                 if(data)
                                     {
@@ -1449,7 +1449,7 @@ const server = net.createServer((socket) => {
                                 
                                   
                                  
-                                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                  const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                 // console.log(data);
                                   if(data)
                                       {
@@ -1485,7 +1485,7 @@ const server = net.createServer((socket) => {
                                   
                                     
                                    
-                                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                    const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                   // console.log(data);
                                     if(data)
                                         {
@@ -1522,7 +1522,7 @@ const server = net.createServer((socket) => {
                                     
                                       
                                      
-                                      const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                      const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                     // console.log(data);
                                       if(data)
                                           {
@@ -1558,7 +1558,7 @@ const server = net.createServer((socket) => {
                                       
                                         
                                        
-                                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                        const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                       // console.log(data);
                                         if(data)
                                             {
@@ -1594,7 +1594,7 @@ const server = net.createServer((socket) => {
                             
                               
                              
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                             // console.log(data);
                               if(data)
                                   {
@@ -1630,7 +1630,7 @@ const server = net.createServer((socket) => {
                             
                               
                              
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                              //console.log(data);
                               if(data)
                                   {
@@ -1666,7 +1666,7 @@ const server = net.createServer((socket) => {
                             
                               
                              
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                              //console.log(data);
                               if(data)
                                   {
@@ -1702,7 +1702,7 @@ const server = net.createServer((socket) => {
                             
                               
                              
-                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                              //console.log(data);
                               if(data)
                                   {
@@ -1738,7 +1738,7 @@ const server = net.createServer((socket) => {
                               
                                 
                                
-                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                //console.log(data);
                                 if(data)
                                     {
@@ -1776,7 +1776,7 @@ const server = net.createServer((socket) => {
                                 
                                   
                                  
-                                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                  const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
                                  //console.log(data);
                                   if(data)
                                       {
@@ -1816,7 +1816,7 @@ const server = net.createServer((socket) => {
                 else{
 
 
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+            const data=await UnilineMacMapping.findOne({where:{SocketNumber:remotePort}});
            // console.log(data);
             if(data)
             {

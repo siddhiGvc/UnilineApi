@@ -1,4 +1,4 @@
-const {MacMapping,TestMode,SerialPort} =require("../../models")
+const {MacMapping,TestMode,SerialPort,UnilineMacMapping} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 var events = require('../../helpers/events');
 const mqttHandler=require('../../../mqtt');
@@ -32,6 +32,9 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.G1=response;
+        data.save();
         events.pubsub.removeAllListeners('getResponse1');
         if (!responseSent) { 
             responseSent=true;
