@@ -33,7 +33,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.G1=response;
+        data.G1=response.toString();
         await data.save();
         events.pubsub.removeAllListeners('getResponse1');
         if (!responseSent) { 
