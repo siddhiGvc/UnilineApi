@@ -64,6 +64,7 @@ export const sendG1 = async (req, res) => {
       const timeout = setTimeout(() => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse2');
+     
         if (!responseSent) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
@@ -75,11 +76,15 @@ export const sendG1 = async (req, res) => {
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G2/r/n");
   
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse2', (response) => {
+      await events.pubsub.emit('getResponse2', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.G2=response.toString();
+        await data.save();
         events.pubsub.removeAllListeners('getResponse2');
+
         if (!responseSent) { 
             responseSent=true;
         res.status(200).json({ data: response }); // Send the response back to the client
@@ -117,10 +122,13 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G3/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse3', (response) => {
+      await events.pubsub.emit('getResponse3', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.G3=response.toString();
+        await data.save();
         events.pubsub.removeAllListeners('getResponse3');
         if (!responseSent) { 
             responseSent=true;
@@ -158,10 +166,13 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "I/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse4', (response) => {
+      await events.pubsub.emit('getResponse4', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.I=response.toString();
+        await data.save();
         events.pubsub.removeAllListeners('getResponse4');
         if (!responseSent) { 
             responseSent=true;
@@ -199,10 +210,13 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "GF/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse5', (response) => {
+      await events.pubsub.emit('getResponse5', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.GF=response.toString();
+        await data.save();
         events.pubsub.removeAllListeners('getResponse5');
         if (!responseSent) { 
             responseSent=true;
@@ -241,10 +255,13 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse6', (response) => {
+      await events.pubsub.emit('getResponse6', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.Q=response.toString();
+        await data.save();
         events.pubsub.removeAllListeners('getResponse6');
         if (!responseSent) { 
             responseSent=true;
@@ -283,10 +300,13 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse7', (response) => {
+      await events.pubsub.emit('getResponse7', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+        data.Q1=response.toString();
+        await data.save();
         events.pubsub.removeAllListeners('getResponse7');
         if (!responseSent) { 
             responseSent=true;
