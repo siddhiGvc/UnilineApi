@@ -42,9 +42,11 @@ const parseInternal = (payload, mqttClient,topic) => {
                 var parts = payload.split(' ');
                
                 console.log("parts",parts);
-           
+                if(parts.length==8 || parts.length==9)
+                    {
                     events.pubsub.removeAllListeners('getResponse1');
                     callback(parts);
+                    }
                  
                 
               
@@ -81,9 +83,11 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
        
         console.log("parts",parts);
-     
+        if(parts.length==4 || parts.length==5)
+            {
             events.pubsub.removeAllListeners('getResponse3');
             callback(parts);
+            }
             
         
      });
